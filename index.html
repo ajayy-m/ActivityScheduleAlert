@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fancy Activity Schedule Alerter</title>
+  <!-- Link to the external CSS file -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Import Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Background overlay for better readability -->
+  <div class="overlay"></div>
+  <div class="container">
+    <h1>Activity Schedule Alerter</h1>
+    <div class="schedule-form">
+      <input type="datetime-local" id="activityTime" />
+      <input type="text" id="activityDesc" placeholder="Activity Description" />
+      <button onclick="scheduleActivity()">Schedule Activity</button>
+    </div>
+    <div id="scheduleList"></div>
+  </div>
+
+  <script>
+    function scheduleActivity() {
+      const timeInput = document.getElementById('activityTime').value;
+      const desc = document.getElementById('activityDesc').value;
+      const activityTime = new Date(timeInput).getTime();
+      const now = Date.now();
+      const delay = activityTime - now;
+      
+      if (delay > 0) {
+        setTimeout(() => {
+          if (Notification.permission === 'granted') {
+            new Notification('Activity Reminder', { body: desc });
+          } else {
+            alert('Activity Reminder: ' + desc);
+          }
+        }, delay);
+        
+        const scheduleList = document.getElementById('scheduleList');
+        scheduleList.innerHTML += `
+          <div class="schedule-item">
+            <p><strong>Activity:</strong> ${desc}</p>
+            <p><strong>Time:</strong> ${timeInput}</p>
+          </div>`;
+      } else {
+        alert('Please choose a future time.');
+      }
+    }
+    
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  </script>
+</body>
+</html>

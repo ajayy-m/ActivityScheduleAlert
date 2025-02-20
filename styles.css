@@ -1,0 +1,103 @@
+/* Define theme variables */
+:root {
+  --primary-color: #ff6f61;
+  --secondary-color: #6b5b95;
+  --text-color: #fff;
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --button-bg: #ff6f61;
+  --button-hover-bg: #e65c50;
+}
+
+/* Set a full-screen background image with a fixed position */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: url('background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+
+/* Main container styling */
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+  margin: 100px auto;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* Heading styling */
+h1 {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Form styling */
+.schedule-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.schedule-form input[type="datetime-local"],
+.schedule-form input[type="text"] {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background: var(--input-bg);
+  color: #333;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.schedule-form input[type="datetime-local"]:focus,
+.schedule-form input[type="text"]:focus {
+  box-shadow: 0 0 8px var(--primary-color);
+}
+
+.schedule-form button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  background: var(--button-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.schedule-form button:hover {
+  background: var(--button-hover-bg);
+  transform: scale(1.02);
+}
+
+/* Scheduled item styling */
+#scheduleList {
+  margin-top: 20px;
+}
+
+.schedule-item {
+  background: var(--input-bg);
+  color: #333;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease;
+}
+
+/* Slide-in animation for new items */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
