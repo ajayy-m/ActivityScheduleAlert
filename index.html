@@ -19,7 +19,12 @@
       <input type="text" id="activityDesc" placeholder="Activity Description" />
       <button onclick="scheduleActivity()">Schedule Activity</button>
     </div>
+    
+    <!-- Scheduled Activities List -->
     <div id="scheduleList"></div>
+
+    <!-- Link to view scheduled history -->
+    <a href="history.html" class="history-btn">View Scheduled History</a>
   </div>
 
   <script>
@@ -29,8 +34,14 @@
       const activityTime = new Date(timeInput).getTime();
       const now = Date.now();
       const delay = activityTime - now;
-      
+
       if (delay > 0) {
+        // Save to localStorage
+        let activities = JSON.parse(localStorage.getItem('scheduledActivities')) || [];
+        activities.push({ time: timeInput, desc: desc });
+        localStorage.setItem('scheduledActivities', JSON.stringify(activities));
+
+        // Schedule notification
         setTimeout(() => {
           if (Notification.permission === 'granted') {
             new Notification('Activity Reminder', { body: desc });
@@ -38,7 +49,8 @@
             alert('Activity Reminder: ' + desc);
           }
         }, delay);
-        
+
+        // Display scheduled activity immediately on the page
         const scheduleList = document.getElementById('scheduleList');
         scheduleList.innerHTML += `
           <div class="schedule-item">
@@ -49,7 +61,8 @@
         alert('Please choose a future time.');
       }
     }
-    
+
+    // Request notification permission
     if (Notification.permission !== 'granted') {
       Notification.requestPermission();
     }
